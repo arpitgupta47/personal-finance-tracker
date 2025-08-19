@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Personal Finance Tracker</h1>
+    </header>
+    
+    <div class="container">
+        <div class="dashboard">
+            <div class="sidebar">
+                <!-- Income Form -->
+                <div class="card">
+                    <h2>Add Income</h2>
+                    <form id="incomeForm">
+                        <div class="form-group">
+                            <label for="incomeAmount">Amount</label>
+                            <input type="number" id="incomeAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="incomeSource">Source</label>
+                            <input type="text" id="incomeSource" placeholder="e.g., Salary, Freelance" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="incomeDate">Date</label>
+                            <input type="date" id="incomeDate" required>
+                        </div>
+                        <button type="submit">Add Income</button>
+                    </form>
+                </div>
+                
+                <!-- Expense Form -->
+                <div class="card">
+                    <h2>Add Expense</h2>
+                    <form id="expenseForm">
+                        <div class="form-group">
+                            <label for="expenseAmount">Amount</label>
+                            <input type="number" id="expenseAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expenseCategory">Category</label>
+                            <select id="expenseCategory" required>
+                                <option value="">Select category</option>
+                                <option value="food">Food</option>
+                                <option value="transportation">Transportation</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="housing">Housing</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="expenseDescription">Description</label>
+                            <input type="text" id="expenseDescription" placeholder="e.g., Groceries, Bus fare" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expenseDate">Date</label>
+                            <input type="date" id="expenseDate" required>
+                        </div>
+                        <button type="submit">Add Expense</button>
+                    </form>
+                </div>
+                
+                <!-- Savings Goal Form -->
+                <div class="card">
+                    <h2>Set Savings Goal</h2>
+                    <form id="savingsForm">
+                        <div class="form-group">
+                            <label for="savingsGoal">Goal Name</label>
+                            <input type="text" id="savingsGoal" placeholder="e.g., Emergency Fund, Vacation" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="savingsAmount">Target Amount</label>
+                            <input type="number" id="savingsAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="savingsDeadline">Target Date</label>
+                            <input type="date" id="savingsDeadline" required>
+                        </div>
+                        <button type="submit">Set Goal</button>
+                    </form>
+                </div>
+                
+                <!-- Budget Setting Form -->
+                <div class="card">
+                    <h2>Set Monthly Budget</h2>
+                    <form id="budgetForm">
+                        <div class="form-group">
+                            <label for="budgetCategory">Category</label>
+                            <select id="budgetCategory" required>
+                                <option value="">Select category</option>
+                                <option value="food">Food</option>
+                                <option value="transportation">Transportation</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="housing">Housing</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budgetAmount">Amount</label>
+                            <input type="number" id="budgetAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="budgetMonth">Month</label>
+                            <input type="month" id="budgetMonth" required>
+                        </div>
+                        <button type="submit">Set Budget</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <!-- Summary Card -->
+                <div class="card">
+                    <h2>Financial Summary</h2>
+                    <div class="summary-item">
+                        <span>Total Income</span>
+                        <span class="amount income" id="totalIncome">₹0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total Expenses</span>
+                        <span class="amount expense" id="totalExpenses">₹0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Balance</span>
+                        <span class="amount" id="balance">₹0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Savings Progress</span>
+                        <span class="amount" id="savingsProgress">₹0.00 / ₹0.00</span>
+                    </div>
+                </div>
+                
+                <!-- Expense Breakdown Chart -->
+                <div class="card">
+                    <h2>Expense Breakdown</h2>
+                    <div class="chart-container">
+                        <canvas id="expenseChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Income vs Expense Chart -->
+                <div class="card">
+                    <h2>Income vs Expense</h2>
+                    <div class="chart-container">
+                        <canvas id="incomeExpenseChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Budget Tracking -->
+                <div class="card">
+                    <h2>Budget Tracking</h2>
+                    <div id="budgetTracking">
+                        <!-- Budget tracking items will be added here -->
+                    </div>
+                </div>
+                
+                <!-- Recent Transactions -->
+                <div class="card">
+                    <h2>Recent Transactions</h2>
+                    <div class="transaction-list" id="transactionList">
+                        <!-- Transactions will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
