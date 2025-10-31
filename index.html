@@ -1,23 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Finance Tracker</title>
+    <title>Expense Manager</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Personal Finance Tracker</h1>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-wallet"></i>
+                <h1>Expense Manager</h1>
+            </div>
+            <div class="nav-menu">
+                <button id="themeToggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+                <button class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
     </header>
     
     <div class="container">
         <div class="dashboard">
             <div class="sidebar">
+                <!-- Quick Actions -->
+                <div class="card quick-actions">
+                    <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                    <div class="action-buttons">
+                        <button class="action-btn income-btn">
+                            <i class="fas fa-plus"></i>
+                            <span>Add Income</span>
+                        </button>
+                        <button class="action-btn expense-btn">
+                            <i class="fas fa-minus"></i>
+                            <span>Add Expense</span>
+                        </button>
+                        <button class="action-btn goals-btn">
+                            <i class="fas fa-bullseye"></i>
+                            <span>Set Goals</span>
+                        </button>
+                        <button class="action-btn reports-btn">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Reports</span>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Income Form -->
-                <div class="card">
-                    <h2>Add Income</h2>
+                <div class="card income-card">
+                    <h2><i class="fas fa-money-bill-wave"></i> Add Income</h2>
                     <form id="incomeForm">
                         <div class="form-group">
                             <label for="incomeAmount">Amount</label>
@@ -36,8 +77,8 @@
                 </div>
                 
                 <!-- Expense Form -->
-                <div class="card">
-                    <h2>Add Expense</h2>
+                <div class="card expense-card" style="display: none;">
+                    <h2><i class="fas fa-credit-card"></i> Add Expense</h2>
                     <form id="expenseForm">
                         <div class="form-group">
                             <label for="expenseAmount">Amount</label>
@@ -68,8 +109,8 @@
                 </div>
                 
                 <!-- Savings Goal Form -->
-                <div class="card">
-                    <h2>Set Savings Goal</h2>
+                <div class="card goals-card" style="display: none;">
+                    <h2><i class="fas fa-bullseye"></i> Set Savings Goal</h2>
                     <form id="savingsForm">
                         <div class="form-group">
                             <label for="savingsGoal">Goal Name</label>
@@ -88,8 +129,8 @@
                 </div>
                 
                 <!-- Budget Setting Form -->
-                <div class="card">
-                    <h2>Set Monthly Budget</h2>
+                <div class="card budget-card" style="display: none;">
+                    <h2><i class="fas fa-money-check-alt"></i> Set Monthly Budget</h2>
                     <form id="budgetForm">
                         <div class="form-group">
                             <label for="budgetCategory">Category</label>
@@ -118,8 +159,8 @@
             
             <div class="main-content">
                 <!-- Summary Card -->
-                <div class="card">
-                    <h2>Financial Summary</h2>
+                <div class="card summary-card">
+                    <h2><i class="fas fa-chart-pie"></i> Financial Summary</h2>
                     <div class="summary-item">
                         <span>Total Income</span>
                         <span class="amount income" id="totalIncome">₹0.00</span>
@@ -139,24 +180,24 @@
                 </div>
                 
                 <!-- Expense Breakdown Chart -->
-                <div class="card">
-                    <h2>Expense Breakdown</h2>
+                <div class="card chart-card">
+                    <h2><i class="fas fa-chart-pie"></i> Expense Breakdown</h2>
                     <div class="chart-container">
                         <canvas id="expenseChart"></canvas>
                     </div>
                 </div>
                 
                 <!-- Income vs Expense Chart -->
-                <div class="card">
-                    <h2>Income vs Expense</h2>
+                <div class="card chart-card">
+                    <h2><i class="fas fa-chart-line"></i> Income vs Expense</h2>
                     <div class="chart-container">
                         <canvas id="incomeExpenseChart"></canvas>
                     </div>
                 </div>
                 
                 <!-- Budget Tracking -->
-                <div class="card">
-                    <h2>Budget Tracking</h2>
+                <div class="card tracking-card">
+                    <h2><i class="fas fa-tasks"></i> Budget Tracking</h2>
                     <div id="budgetTracking">
                         <!-- Budget tracking items will be added here -->
                     </div>
@@ -164,15 +205,42 @@
                 
                 <!-- Recent Transactions -->
                 <div class="card">
-                    <h2>Recent Transactions</h2>
+                    <h2><i class="fas fa-history"></i> Recent Transactions</h2>
                     <div class="transaction-list" id="transactionList">
                         <!-- Transactions will be added here -->
+                    </div>
+                </div>
+
+                <!-- Reports Section -->
+                <div class="card reports-card" style="display: none;">
+                    <h2><i class="fas fa-chart-line"></i> Financial Reports</h2>
+                    <div class="reports-grid">
+                        <div class="report-item">
+                            <h3>Monthly Overview</h3>
+                            <canvas id="monthlyOverviewChart"></canvas>
+                        </div>
+                        <div class="report-item">
+                            <h3>Spending Categories</h3>
+                            <canvas id="categorySpendingChart"></canvas>
+                        </div>
+                        <div class="report-item">
+                            <h3>Savings Progress</h3>
+                            <canvas id="savingsProgressChart"></canvas>
+                        </div>
+                        <div class="report-item">
+                            <h3>Budget vs Actual</h3>
+                            <canvas id="budgetComparisonChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
+    <script src="auth.js"></script>
+    <script src="modern-features.js"></script>
+    <script src="interactive-features.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
