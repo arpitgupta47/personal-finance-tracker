@@ -421,4 +421,3 @@ function capitalizeFirstLetter(string) {
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', initApp);
-
